@@ -43,7 +43,7 @@
                             />
                         </div>
                         <div class="mb-6">
-                            <select type="text" name="category_id" class="text-blue-600 w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors">
+                            <select required type="text" name="category_id" class="text-blue-600 w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors">
                                 <option value="" disabled selected >Select Category</option>
                                 @foreach ($categories as $category)
                                     <option  value="{{ $category->id }}">{{ $category->name }}</option>
@@ -62,6 +62,14 @@
                     @else
                         <div class="text-center">
                             <p class="text-gray-700 mb-2 text-left">Quiz Name: <span class="font-bold">{{ session('quizDetails.name') }}</span></p>
+                            <p class="text-gray-700 mb-2 text-left"><span>Total MCQs: {{ $totalMcqs }}</span>
+                         @if ($totalMcqs>0)
+                           <a  href="show-quizzes/{{ session('quizDetails.id') }}">Show MCQs</a>
+                        @else
+                            <p class="text-red-600 mb-4 text-left">Please add at least one question to finish the quiz.</p>
+                            
+                        @endif</p>
+                       
                               <form action="/add-mcq" method="POST">
                         @csrf
                         
@@ -69,43 +77,58 @@
                            
                             <textarea 
                                 name="question"
-                                required
+                               
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Questions"
                             ></textarea>
                     
-                                
+                                @error('question')
+                                    <p class="text-left text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                         </div>
                         <div class="mb-6 space-y-4">
                           
                             <input 
                                 type="text" 
                                 name="a"
-                                required
+                                
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your First Option"
                             />
+                            @error('a')
+                                <p class="text-left text-red-500 text-sm mt-1">{{ $message }}</p>
+                                
+                            @enderror
                             <input 
                                 type="text" 
                                 name="b"
-                                required
+                                
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Second Option"
                             />
+                            @error('b')
+                                <p class="text-left text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                             <input 
                                 type="text" 
                                 name="c"
-                                required
+                                
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Third Option"
                             />
+                            @error('c')
+                                <p class="text-left text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                             <input 
                                 type="text" 
                                 name="d"
-                                required
+                               
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Fourth Option"
                             />
+                            @error('d')
+                                <p class="text-left text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                             <select name="correct_ans" class="text-blue-600 w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors">
                                 <option value="" disabled selected>Select Correct Option</option>
                                 <option value="a">Option A</option>
@@ -113,6 +136,9 @@
                                 <option value="c">Option C</option>
                                 <option value="d">Option D</option>
                             </select>   
+                            @error('correct_ans')
+                                <p class="text-left text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
 
 
                         </div>
@@ -135,6 +161,7 @@
                         >
                             Add More Questions
                         </button>
+                        <a href="/end-quiz" class="w-full block  bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"> Finish Quiz</a>
                     </form>
                         </div>
                     @endif

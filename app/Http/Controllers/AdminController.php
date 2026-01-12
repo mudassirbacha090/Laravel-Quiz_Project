@@ -88,9 +88,10 @@ class AdminController extends Controller
     }
     function addQuiz()
     {   
+
         $categories = Category::all();
         $admin = Session::get('admin');
-
+        $totalMcqs = 0;
         if($admin){ 
             $quizName=request()->input('quiz_name');
             $category_id=request()->input('category_id');
@@ -102,14 +103,28 @@ class AdminController extends Controller
                     Session::put('quizDetails',$quiz);
                     return redirect('add-quiz');
                 }
+            }else{
+                if(Session::has('quizDetails')){
+                    $quizDetails = Session::get('quizDetails');
+                    $totalMcqs = Mcq::where('quiz_id',$quizDetails->id)->count();
+                }              
             }
-            return view('add-quiz', ['admin' => $admin, 'categories' => $categories]);
+            return view('add-quiz', ['admin' => $admin, 'categories' => $categories, 'totalMcqs' => $totalMcqs]);
         }else{
             return redirect('admin-login');
         }
     }
     function storeQuiz(Request $request)
     {
+        $request->validate([
+            'question' => 'required',
+            'a' => 'required',
+            'b' => 'required',
+            'c' => 'required',
+            'd' => 'required',
+            'correct_ans' => 'required',
+
+        ]);
        $mcq = new Mcq();
          $quiz = Session::get('quizDetails');
          $admin = Session::get('admin');
@@ -131,5 +146,22 @@ class AdminController extends Controller
         return redirect('/add-quiz');
        }
       }
+        }
+    function endQuiz()
+    {
+        Session::forget('quizDetails');
+        return redirect('/add-quiz');
+        }
+
+
+    function showQuizzes()
+    {
+        $admin = Session::get('admin');
+        if($admin){
+            $quizzes = Mcq::where('quiz_id',request('id'))->get();
+        return view('show-quiz', ['admin' => $admin, 'quizzes' => $quizzes]);
+        }else{
+            return redirect('admin-login');
+            }
         }
 }
