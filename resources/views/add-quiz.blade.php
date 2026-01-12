@@ -27,9 +27,9 @@
                     @if(!session('quizDetails'))
                         
                     
-                    <form action="/add-quiz" method="POST">
+                    <form action="/add-quiz" method="GET">
                         @csrf
-                        <!-- Category Name -->
+                        <!-- Quiz Name -->
                         <div class="mb-6">
                             <label class="block text-gray-700 text-sm font-semibold mb-2" for="category_name">
                                 Quiz Name
@@ -56,20 +56,19 @@
                             type="submit"
                             class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                         >
-                            Add Category
+                            Add Quiz
                         </button>
                     </form>
                     @else
                         <div class="text-center">
-                            <!-- <h3 class="text-xl font-semibold text-green-600 mb-4">Quiz Added Successfully!</h3> -->
                             <p class="text-gray-700 mb-2 text-left">Quiz Name: <span class="font-bold">{{ session('quizDetails.name') }}</span></p>
-                              <form action="/add-quiz" method="POST">
+                              <form action="/add-mcq" method="POST">
                         @csrf
                         
                         <div class="mb-6">
                            
                             <textarea 
-                                name="quiz_description"
+                                name="question"
                                 required
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Questions"
@@ -81,38 +80,38 @@
                           
                             <input 
                                 type="text" 
-                                name="quiz_name"
+                                name="a"
                                 required
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your First Option"
                             />
                             <input 
                                 type="text" 
-                                name="quiz_name"
+                                name="b"
                                 required
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Second Option"
                             />
                             <input 
                                 type="text" 
-                                name="quiz_name"
+                                name="c"
                                 required
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Third Option"
                             />
                             <input 
                                 type="text" 
-                                name="quiz_name"
+                                name="d"
                                 required
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                                 placeholder="Enter Your Fourth Option"
                             />
-                            <select name="correct_option" class="text-blue-600 w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors">
+                            <select name="correct_ans" class="text-blue-600 w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors">
                                 <option value="" disabled selected>Select Correct Option</option>
-                                <option value="option1">Option A</option>
-                                <option value="option2">Option B</option>
-                                <option value="option3">Option C</option>
-                                <option value="option4">Option D</option>
+                                <option value="a">Option A</option>
+                                <option value="b">Option B</option>
+                                <option value="c">Option C</option>
+                                <option value="d">Option D</option>
                             </select>   
 
 
@@ -122,12 +121,16 @@
                         <!-- Submit Button -->
                         <button 
                             type="submit"
+                            value="done"
+                            name="submit"
                             class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                         >
                             Add and Submit
                         </button>
                             <button 
                             type="submit"
+                            name="submit"
+                            value="add-more"
                             class="w-full my-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                         >
                             Add More Questions

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Category;
 use App\Models\Quiz;
+use App\Models\Mcq;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -107,4 +108,28 @@ class AdminController extends Controller
             return redirect('admin-login');
         }
     }
+    function storeQuiz(Request $request)
+    {
+       $mcq = new Mcq();
+         $quiz = Session::get('quizDetails');
+         $admin = Session::get('admin');
+       $mcq->question = $request->input('question');
+       $mcq->a = $request->input('a');
+       $mcq->b = $request->input('b');
+       $mcq->c = $request->input('c');
+       $mcq->d = $request->input('d');
+       $mcq->correct_ans = $request->input('correct_ans');
+       $mcq->admin_id = $admin->id;
+       $mcq->quiz_id = $quiz->id;
+       $mcq->category_id = $quiz->category_id;
+        
+        if( $mcq->save()){
+        if($request->submit=="add-more"){
+        return redirect(url()->previous());
+       }else{
+        Session::forget('quizDetails');
+        return redirect('/add-quiz');
+       }
+      }
+        }
 }
