@@ -154,12 +154,25 @@ class AdminController extends Controller
         }
 
 
-    function showQuizzes()
+    function showQuizzes($id,$quizName)
     {
         $admin = Session::get('admin');
         if($admin){
-            $quizzes = Mcq::where('quiz_id',request('id'))->get();
-        return view('show-quiz', ['admin' => $admin, 'quizzes' => $quizzes]);
+            $quizzes = Mcq::where('quiz_id',$id)->get();
+        return view('show-quiz', ['admin' => $admin, 'quizzes' => $quizzes, 'quizName'=>$quizName]);
+        }else{
+            return redirect('admin-login');
+            }
+        }
+
+
+    function quizList($id,$category)
+    {
+        $admin = Session::get('admin');
+        if($admin){
+         $quizData = Quiz::where('category_id',$id)->get();
+
+        return view('quiz-list', ['admin' => $admin, 'quizData' => $quizData, 'category'=>$category]);
         }else{
             return redirect('admin-login');
             }

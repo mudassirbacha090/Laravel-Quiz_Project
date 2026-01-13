@@ -62,13 +62,13 @@
                     @else
                         <div class="text-center">
                             <p class="text-gray-700 mb-2 text-left">Quiz Name: <span class="font-bold">{{ session('quizDetails.name') }}</span></p>
-                            <p class="text-gray-700 mb-2 text-left"><span>Total MCQs: {{ $totalMcqs }}</span>
+                            <!-- <p class="text-gray-700 mb-2 text-left"><span>Total MCQs: {{ $totalMcqs }}</span>
                          @if ($totalMcqs>0)
                            <a  href="show-quizzes/{{ session('quizDetails.id') }}">Show MCQs</a>
                         @else
                             <p class="text-red-600 mb-4 text-left">Please add at least one question to finish the quiz.</p>
                             
-                        @endif</p>
+                        @endif</p> -->
                        
                               <form action="/add-mcq" method="POST">
                         @csrf
