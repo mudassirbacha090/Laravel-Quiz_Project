@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $table = 'categories';
-     public $timestamps = false;
-     // Category.php model
-public function quizzes()
-{
-    return $this->hasMany(Quiz::class);
-}
+    protected $fillable = ['name', 'creator'];
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    public function mcqs()
+    {
+        return $this->hasMany(Mcq::class);
+    }
 }

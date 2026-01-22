@@ -30,6 +30,7 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">S.No</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Mcqs Count</th>
                                     <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Action</th>
                                 </tr>
                             </thead>
@@ -39,10 +40,14 @@
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-6 py-4 text-sm text-gray-900">{{ $loop->iteration }}</td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $quiz->name }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">
+                                       {{ App\Models\Mcq::where('quiz_id', $quiz->id)->count() }}
+                                    </td>
                                     <td class="px-6 py-4 text-center">
-                                         <a href="/start-quiz" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                         <a href="/start-quiz/{{ $quiz->id }}/{{ $quiz->name }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                                             Attempt Quiz
                                         </a>
+
                                         
                                         <!-- <a href="/show-quizzes/{{ $quiz->id }}/{{ $quiz->name }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                                             Attempt Quiz
